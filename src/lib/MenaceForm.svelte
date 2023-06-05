@@ -4,10 +4,13 @@
     import { fade, fly } from "svelte/transition"
     import type { MenaceReport } from './types';
     import { createEventDispatcher } from 'svelte';
+    import { bubble } from 'svelte/internal';
+    import * as AppService from '../services/app-service';
+
 
     let date: string = "";
     let description: string = "";
-    let file;
+    let files:FileList;
     let grievanceFiled = false;
 
 
@@ -16,21 +19,24 @@
 
     let menaceReport: MenaceReport;
     
-    function submit(){
+    async function submit(){
         menaceReport = {id:`${Math.random()}`, description, menaceLevel: 2, timestamp: 0};
         dispatch("submit", menaceReport);
         date = "";
         description = "";
-        progress.set(0.33)
-        grievanceFiled = true
+        progress.set(0.33);
+        grievanceFiled = true;
+
+        const {path} = await AppService.uploadFile(files[0]); 
+
         window.scrollTo({
             top:0,
             behavior:"smooth"
-        })
+        });
 
         setTimeout(()=>{
             grievanceFiled = false
-        }, 5000)
+        }, 5000);
     }
 
     function dismiss(){
@@ -50,8 +56,9 @@
     </div>
 {:else}
 
-    <form on:submit|preventDefault={submit}>
+ 
 
+    <form on:submit|preventDefault={submit}>
 
         <div>
             <label in:fly={{x:150, duration:1000}} for="dateInput">Time of Menacing:</label>
@@ -85,8 +92,8 @@
         </div>
 
         <div class="file-input">
-            <label for="file-input">Picture *optional </label>
-            <input id="file-input" type="file" />
+            <label for="file-input" >Picture *optional </label>
+            <input accept="image/png, image/jpeg" bind:files id="file-input" type="file" />
         </div>
 
 
