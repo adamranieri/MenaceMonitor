@@ -126,12 +126,11 @@
         
         
 
-        <div>
+
             <div class="report">
                 <button  id="report-btn" in:fly={{x:150, duration:1100}}  class="nes-btn is-success" >Report</button>
                 <button on:click|preventDefault={dismiss} in:fly={{x:150,duration:1100}} class="nes-btn is-warning">Dismiss</button>
             </div>
-        </div>
 
     </form>
 {/if}
