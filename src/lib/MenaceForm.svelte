@@ -2,7 +2,7 @@
     import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
     import { fade, fly } from "svelte/transition"
-    import type { MenaceReport } from './types';
+    import { isMenaceReport, type MenaceReport, type MenaceReportPayload } from './types';
     import { createEventDispatcher } from 'svelte';
     import { bubble } from 'svelte/internal';
     import * as AppService from '../services/app-service';
@@ -18,25 +18,46 @@
     const dispatch = createEventDispatcher();
 
     let menaceReport: MenaceReport;
+
+    function calcMenaceLevel(progress: number): 1 | 2 | 3{
+        switch(progress){
+            case 0.33: return 1;
+            case 0.66: return 2;
+            case 1: return 3
+            default: return 1
+        }
+    }
     
     async function submit(){
-        menaceReport = {id:`${Math.random()}`, description, menaceLevel: 2, timestamp: 0};
+
+        let imageSrc: string | undefined;
+        
+        if(files){
+            const {path} = await AppService.uploadFile(files[0]);    
+            imageSrc = path;
+        }
+
+        const menaceReport:MenaceReportPayload = {description, imageLinks:[imageSrc],menaceLevel:calcMenaceLevel($progress), date};
+        const report = await AppService.createMenaceReport(menaceReport);
+
+        if(!isMenaceReport(report)){
+            alert("Unable to Report. Please try again later");
+            grievanceFiled = false;
+            return;
+        }
+
         dispatch("submit", menaceReport);
-        date = "";
-        description = "";
-        progress.set(0.33);
         grievanceFiled = true;
-
-        const {path} = await AppService.uploadFile(files[0]); 
-
+  
         window.scrollTo({
             top:0,
             behavior:"smooth"
         });
 
         setTimeout(()=>{
+            console.log("HERE")
             grievanceFiled = false
-        }, 5000);
+        }, 3000);
     }
 
     function dismiss(){
@@ -50,8 +71,8 @@
 {#if grievanceFiled}
     <div in:fade={{duration:500}} style="text-align: center; display:flex; justify-content:center">
         <div>
-            <p>&#9989;</p>
-            <p>Grievance filed</p>
+            <p>&#10071;</p>
+            <p>Menacing Reported</p>
         </div>
     </div>
 {:else}
@@ -60,7 +81,7 @@
 
     <form on:submit|preventDefault={submit}>
 
-        <div>
+        <div style="padding-top: 5px">
             <label in:fly={{x:150, duration:1000}} for="dateInput">Time of Menacing:</label>
             <input in:fly={{x:150, duration:1100}}  id="dateInput" required type="datetime-local" bind:value={date}>
         </div>

@@ -5,21 +5,17 @@
   import MenaceReportCard from "./lib/MenaceReportCard.svelte";
   import type { MenaceReport } from "./lib/types";
   import { crossfade, fly } from 'svelte/transition';
+    import { loadReports } from "./services/app-service";
 
   let isFormVisible = false;
 
-  let menaceReports: MenaceReport[] = [
-    {id:"101", description:"Marie woke me up at 5 AM", menaceLevel:2, timestamp: 0},
-    {id:"202", description:"Marie scratched at door while in a meeting", menaceLevel:1, timestamp: 0},
-    {id:"303", description:"Marie bit my toes", menaceLevel:3, timestamp:0},
-    {id:"404", description:"Marie pounced me awake", menaceLevel:2, timestamp:0},
-    {id:"505", description:"Marie Ran into the door LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL", menaceLevel:1, timestamp:0},
-    {id:"606", description:"Marie ate my tuna fish", menaceLevel:3, timestamp:0},
-    {id:"707", description:"Marie pounced me awake", menaceLevel:2, timestamp:0},
-    {id:"808", description:"Marie Ran into the door", menaceLevel:1, timestamp:0},
-    {id:"909", description:"Marie ate my tuna fish", menaceLevel:3, timestamp:0}
-  ]
+  let menaceReports: MenaceReport[] = [];
   let selectedMenaceReport: MenaceReport;
+
+  (async()=>{
+    menaceReports = await loadReports(1);
+    console.log(menaceReports);
+  })()
 
   function reportMenace(event){
     const report: MenaceReport = event.detail;
@@ -36,7 +32,6 @@
   }
 
   function handleDismiss(){
-    console.log("HANDLER")
     isFormVisible = false;
   }
 

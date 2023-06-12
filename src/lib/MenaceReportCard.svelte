@@ -4,13 +4,15 @@
     export let menaceReport:MenaceReport;
     let showImage: boolean = false;
 
+    console.log(menaceReport.imageLinks[0])
+
 </script>
 
 
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <section on:click={()=>showImage=!showImage} transition:slide={{duration:300}}>
 
-        <p>{new Date(menaceReport.timestamp).toLocaleDateString()}</p>
+        <p>{menaceReport.date}</p>
         <p>{menaceReport.description}</p>
         {#if  menaceReport.menaceLevel === 1}
             <p>Menace Level: &#128572;</p>
@@ -21,7 +23,7 @@
         {/if}
 
         {#if showImage}
-            <img transition:fade={{duration:300}} src="https://pbs.twimg.com/media/FHvTRyeWUAI93hG?format=jpg&name=small" alt="of menace">
+            <img transition:fade={{duration:300}} src={`${menaceReport.imageLinks[0]}`} alt="of menace">
         {/if}
 
         

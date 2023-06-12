@@ -4,7 +4,6 @@
     import { fade } from "svelte/transition";
     import MenaceReportCard from "./MenaceReportCard.svelte";
     import type { MenaceReport } from "./types";
-    import { createEventDispatcher } from "svelte";
 
     export let menaceReports:MenaceReport[];
 

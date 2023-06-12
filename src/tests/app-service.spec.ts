@@ -1,21 +1,26 @@
 import { describe, it, expect } from 'vitest';
-import { createMenaceReport } from '../services/app-service';
-import type { MenaceReport } from '../lib/types';
+import { createMenaceReport, loadReports } from '../services/app-service';
+import type { MenaceReport, MenaceReportPayload } from '../lib/types';
 
 describe("Tests for services", ()=>{
 
-    it("Should create a report", async ()=>{
+    it("Should create a report", async () => {
 
-        const report:MenaceReport = {
-            id:"101",
+        const report:MenaceReportPayload = {
             description:"Bit my toes",
             menaceLevel: 3,
-            timestamp: 0
+            date: "",
+            imageLinks:[]
+            
         }
 
         const savedReport = await createMenaceReport(report);
-        console.log(savedReport)
 
+    })
+
+    it("Should read reports", async () => {
+        const reports = await loadReports(10);
+        console.log(reports);
     })
 
 });
