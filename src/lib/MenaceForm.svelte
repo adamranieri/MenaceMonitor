@@ -68,7 +68,8 @@
 
 </script>
 
-<div id="container"  >
+<div id="container"  class="nes-container with-title is-centered is-dark is-rounded" >
+    <p class="title">Menace Report</p>
 {#if grievanceFiled}
     <div in:fade={{duration:500}} style="text-align: center; display:flex; justify-content:center">
         <div>
@@ -82,48 +83,48 @@
 
     <form on:submit|preventDefault={submit}>
 
-        <div style="padding-top: 5px">
+        <div class="nes-field">
             <label in:fly={{x:150, duration:1000}} for="dateInput">Time of Menacing:</label>
-            <input in:fly={{x:150, duration:1100}}  id="dateInput" required type="datetime-local" bind:value={date}>
+            <input in:fly={{x:150, duration:1100}} id="dateInput" required type="datetime-local" bind:value={date} class="nes-input" />
         </div>
 
-        <div class="desc-group">
-            <label in:fly={{x:150, duration:1000}}  for="descInput">Description of Menace Event</label>
-            <textarea  in:fly={{x:150, duration:1100}}  id="descInput" required minlength="10" maxlength="50" rows="5" bind:value={description} />
+        <div class="nes-field">
+            <label in:fly={{x:150, duration:1000}}  for="descInput">Description of Menace Event:</label>
+            <textarea class="nes-textarea"  in:fly={{x:150, duration:1100}}  id="descInput" required minlength="10" maxlength="150" rows="5" bind:value={description} />
         </div>
 
         <div class="menace-group">
             <div class="menace-meter">
                 <label in:fly={{x:150, duration:1000}}  for="menaceLevel">Menace Level</label>
-                <progress in:fly={{x:150, duration:1100}}  value={$progress} class="progress-bar"/>
+                <progress class="nes-progress is-error" in:fly={{x:150, duration:1100}}  value={$progress} />
                 <div class="menace-buttons" in:fly={{x:150, duration:1100}} >
-                    <button class="menace-button" on:click|preventDefault={()=> progress.set(0.33)}>&#128572;</button>
-                    <button class="menace-button" on:click|preventDefault={()=> progress.set(0.66)}>&#128574;</button>
-                    <button class="menace-button" on:click|preventDefault={()=> progress.set(1)}>&#128576;</button>
+
+                    <button class="nes-btn" on:click|preventDefault={()=> progress.set(0.33)}>MIN</button>
+                    <button class="nes-btn" on:click|preventDefault={()=> progress.set(0.66)}>MED</button>
+                    <button class="nes-btn" on:click|preventDefault={()=> progress.set(1)}>MAX</button>
                     <div in:fly={{x:150, duration:1200}}>
                         {#if $progress <.34}
-                            <p style="margin: 0%;">&#128572;</p>
+                            <img height="42" width="42" src="./mild_menace-removebg-preview.png" alt="mild menace cat"/>
                         {:else if $progress < .67}
-                            <p style="margin: 0%;">&#128574;</p>
+                            <img height="42" width="42" src="./average_menace-removebg-preview.png" alt="mild menace cat"/>
                         {:else}
-                            <p style="margin: 0%;">&#128576;</p>
+                            <img height="42" width="42" src="./max_menace-removebg-preview.png" alt="mild menace cat"/>
                         {/if}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="file-input">
-            <label for="file-input" >Picture *optional </label>
-            <input accept="image/png, image/jpeg" bind:files id="file-input" type="file" />
-        </div>
-
-
+        <label class="nes-btn" in:fly={{x:150,duration:1100}}>
+            <span>Add Picture *optional</span>
+            <input accept="image/png, image/jpeg"  bind:files id="file-input" type="file" />
+        </label>
+        
 
         <div class="report">
             <div>
-                <button  id="report-btn" in:fly={{x:150, duration:1100}} >Report</button>
-                <button on:click|preventDefault={dismiss} in:fly={{x:150,duration:1100}}>Dismiss</button>
+                <button  id="report-btn" in:fly={{x:150, duration:1100}}  class="nes-btn is-success" >Report</button>
+                <button on:click|preventDefault={dismiss} in:fly={{x:150,duration:1100}} class="nes-btn is-warning">Dismiss</button>
             </div>
         </div>
 
@@ -139,11 +140,6 @@
 
     input, textarea{
         margin-bottom: 15px;
-    }
-
-    .desc-group{
-        display: flex;
-        flex-direction: column;
     }
 
     .menace-meter{
@@ -176,12 +172,6 @@
     input:valid , textarea:valid{
         border-radius: "5px";
         border: none;
-        outline: 2px solid rgb(164, 255, 164);
-        background-color: rgb(231, 253, 231);
-    }
-
-    input:focus, textarea:focus{
-        background-color: lightblue;
     }
 
     p{
@@ -198,30 +188,14 @@
     #container{
         min-height: 300px;
         text-align: center;
-        background-color: wheat;
-        width: 95vw;
-
+        width: 90vw;
     }
 
-    #report-btn{
-        background-color: aqua;
-    }
 
-    #report-btn:hover{
-        background-color: aquamarine;
-    }
     form{
         display: flex;
         flex-direction: column;
     }
-
-    /* .file-input{
-        margin-top: ;
-
-    } */
-
-
-
 
 
 </style>

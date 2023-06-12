@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { quintOut } from "svelte/easing";
   import MenaceForm from "./lib/MenaceForm.svelte";
   import MenaceList from "./lib/MenaceList.svelte";
-  import MenaceReportCard from "./lib/MenaceReportCard.svelte";
   import type { MenaceReport } from "./lib/types";
-  import { crossfade, fly } from 'svelte/transition';
-    import { loadReports } from "./services/app-service";
+  import { fly } from 'svelte/transition';
+  import { loadReports } from "./services/app-service";
 
   let isFormVisible = false;
 
@@ -14,7 +12,6 @@
 
   (async()=>{
     menaceReports = await loadReports(999);
-    console.log(menaceReports);
   })()
 
   function reportMenace(event){
@@ -38,7 +35,12 @@
 </script>
 
   <header>
-    <h3>Menace Monitor</h3>
+    <h3 class="nes-text is-primary">Menace Monitor</h3>
+    <a href="#" class="nes-badge is-splited">
+      <span class="is-dark">Ver</span>
+      <span class="is-primary">1.0.1</span>
+    </a>
+    
   </header>
 
 <main>
@@ -50,28 +52,40 @@
     {/if}
  
 
-  <section>
+  <section class="nes-container is-rounded">
     <MenaceList menaceReports={menaceReports} on:selected-card={handleSelection}/>
   </section>
 
 
   {#if !isFormVisible}
-    <button id="report-btn" on:click={()=>isFormVisible=!isFormVisible}>Report &#10071;</button>
+    <button id="report-btn" type="button" class="nes-btn is-error" on:click={()=>isFormVisible=!isFormVisible}>Report</button>
   {/if}
 
 
 </main>
 
 <footer>
-  <h3>Menace Monitor</h3>
+  
 </footer>
 
 
 
 <style>
+@import "./node_modules/nes.css/css/nes.css";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+main{
+  font-family: 'Press Start 2P', cursive;
+}
+
 
 header{
-   background-color: brown;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 main {
@@ -79,19 +93,16 @@ main {
 }
 
 footer {
+  display: flex;
   margin-top: auto;
-  background-color: brown;
+  justify-content: space-around;
 }
 
 #report-btn{
   position: fixed;
-  border-radius: 15px;
-  scale: 1.1;
   height: 60px;
-  right: 25px;
-  bottom: 100px;
-  background-color:firebrick;
-  color: cornsilk;
+  right: 20px;
+  bottom: 30px;
 }
 
 
@@ -99,8 +110,8 @@ aside{
   z-index: 1;
   bottom: 10px;
   position: fixed;
+  margin-left: 10px;
 }
-
 
 </style>
 
