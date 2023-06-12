@@ -37,7 +37,9 @@
             imageSrc = path;
         }
 
-        const menaceReport:MenaceReportPayload = {description, imageLinks:[imageSrc],menaceLevel:calcMenaceLevel($progress), date};
+        const imageLinks = imageSrc ? [imageSrc] : [];
+
+        const menaceReport:MenaceReportPayload = {description, imageLinks, menaceLevel:calcMenaceLevel($progress), date};
         const report = await AppService.createMenaceReport(menaceReport);
 
         if(!isMenaceReport(report)){
@@ -55,7 +57,6 @@
         });
 
         setTimeout(()=>{
-            console.log("HERE")
             grievanceFiled = false
         }, 3000);
     }

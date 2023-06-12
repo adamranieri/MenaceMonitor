@@ -13,7 +13,7 @@
   let selectedMenaceReport: MenaceReport;
 
   (async()=>{
-    menaceReports = await loadReports(1);
+    menaceReports = await loadReports(20);
     console.log(menaceReports);
   })()
 
