@@ -83,19 +83,19 @@
 
     <form on:submit|preventDefault={submit}>
 
-        <div class="nes-field">
-            <label in:fly={{x:150, duration:1000}} for="dateInput">Time of Menacing:</label>
+        <div class="nes-field is-inline">
+            <label in:fly={{x:150, duration:1000}} for="dateInput">Time:</label>
             <input in:fly={{x:150, duration:1100}} id="dateInput" required type="datetime-local" bind:value={date} class="nes-input" />
         </div>
 
-        <div class="nes-field">
-            <label in:fly={{x:150, duration:1000}}  for="descInput">Description of Menace Event:</label>
+        <div class="nes-field is-inline">
+            <label in:fly={{x:150, duration:1000}}  for="descInput">Description:</label>
             <textarea class="nes-textarea"  in:fly={{x:150, duration:1100}}  id="descInput" required minlength="10" maxlength="150" rows="1" placeholder="bit me" bind:value={description} />
         </div>
 
         <div class="menace-group">
-            <div class="menace-meter">
-                <label in:fly={{x:150, duration:1000}}  for="menaceLevel">Menace Level</label>
+            <div class="menace-meter nes-field is-inline">
+                <label in:fly={{x:150, duration:1000}}  for="menaceLevel">Menace Level:</label>
                 <progress class="nes-progress is-error" in:fly={{x:150, duration:1100}}  value={$progress} />
                 <div class="menace-buttons" in:fly={{x:150, duration:1100}} >
 
@@ -126,14 +126,12 @@
         
         
 
-        <div class="report">
-            <div>
+        <div>
+            <div class="report">
                 <button  id="report-btn" in:fly={{x:150, duration:1100}}  class="nes-btn is-success" >Report</button>
                 <button on:click|preventDefault={dismiss} in:fly={{x:150,duration:1100}} class="nes-btn is-warning">Dismiss</button>
             </div>
         </div>
-
-
 
     </form>
 {/if}
@@ -162,12 +160,6 @@
         justify-content: space-around;
     }
 
-    .menace-button{
-        height: fit-content;
-        padding-right: 24px;
-        padding-left: 24px;
-    }
-
     .menace-buttons{
         display: flex;
         justify-content: space-between;
@@ -182,7 +174,6 @@
     p{
         font-size:xx-large
     }
-
 
     .report{
         display: flex;
