@@ -32,7 +32,7 @@ export async function uploadFile(file:File):Promise<{path:string}>{
 
 
 export async function loadReports(amount:number = 10):Promise<MenaceReport[]>{
-  const q = query(reportsRef, limit(amount));
+  const q = query(reportsRef, orderBy("date"), limit(amount));
   const snapShot = await getDocs(q);
   const reports:MenaceReport[] = []; 
   snapShot.forEach(doc => reports.push(doc.data() as MenaceReport));
