@@ -90,7 +90,7 @@
 
         <div class="nes-field">
             <label in:fly={{x:150, duration:1000}}  for="descInput">Description of Menace Event:</label>
-            <textarea class="nes-textarea"  in:fly={{x:150, duration:1100}}  id="descInput" required minlength="10" maxlength="150" rows="5" bind:value={description} />
+            <textarea class="nes-textarea"  in:fly={{x:150, duration:1100}}  id="descInput" required minlength="10" maxlength="150" rows="1" placeholder="bit me" bind:value={description} />
         </div>
 
         <div class="menace-group">
@@ -115,10 +115,15 @@
             </div>
         </div>
 
-        <label class="nes-btn" in:fly={{x:150,duration:1100}}>
-            <span>Add Picture *optional</span>
-            <input accept="image/png, image/jpeg"  bind:files id="file-input" type="file" />
-        </label>
+        {#if !files}
+            <label class="nes-btn" in:fly={{x:150,duration:1100}}>
+                <span>Add Picture *optional</span>
+                <input accept="image/png, image/jpeg"  bind:files id="file-input" type="file" />
+            </label>
+        {:else}
+            <span class="nes-text is-success">Photo added!!</span>
+        {/if}
+        
         
 
         <div class="report">
